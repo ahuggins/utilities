@@ -1,0 +1,22 @@
+{
+    "name": "ahuggins/utilities",
+    "description": "Artisan commands for user management, password reset, create user",
+    "keywords": ["Laravel", "Artisan", "User"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew huggins",
+            "email": "andrewhuggins@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "Illuminate/Console": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "AHuggins\\Utilities\\": "src\"
+        }
+    }
+}
