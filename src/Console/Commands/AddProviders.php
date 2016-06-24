@@ -11,7 +11,7 @@ class AddProviders extends Command
      *
      * @var string
      */
-    protected $signature = 'utils:providers';
+    protected $signature = 'utils:providers {namespace : The namespace of package with escaped slash}';
 
     /**
      * The console command description.
@@ -37,6 +37,14 @@ class AddProviders extends Command
      */
     public function handle()
     {
-        
+        $namespace = $this->argument('namespace') . '\Config';
+        $providers = (new $namespace)();
+        if (array_key_exists('providers', $providers)) {
+            dump($providers['providers']);
+        }
+
+        if (array_key_exists('aliases', $providers)) {
+            dd($providers['aliases']);
+        }
     }
 }
