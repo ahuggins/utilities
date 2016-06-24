@@ -10,7 +10,6 @@
             "email": "andrewhuggins@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "Illuminate/Console": "^5.2"
     },
