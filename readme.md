@@ -35,3 +35,9 @@ The Reset Password command has a nice little feature. Here's how to use it:
 `php artisan utils:pw`
 
 If you run that, it will show you a table of the users in your Users table. I envision this to be used in development more than anything, so I am anticipating that you will only have a few test users in your db (I present all the users, so that could be cumbersome). Then the command asks for the ID of the user you want to change the password for. Type in the id, hit enter. Then it will ask you to enter the password, (just like the Create User command, the typing is hidden but it is working), finish typing, hit enter.
+
+Now if you already know the id of the user you want to edit. Simply use the command like this:
+
+`php artisan utils:pw 1`
+
+Where `1` is replaced by the id of the user you want to edit.
