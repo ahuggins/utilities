@@ -1,6 +1,6 @@
 <?php
 
-namespace AHuggins\Console\Commands;
+namespace AHuggins\Utilities\Console\Commands;
 
 use App\User;
 use Illuminate\Console\Command;
