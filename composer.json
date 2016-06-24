@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "AHuggins\\Utilities\\": "src\"
+            "AHuggins\\Utilities\\": "src/"
         }
     }
 }
