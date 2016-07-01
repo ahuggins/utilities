@@ -2,10 +2,10 @@
 
 namespace AHuggins\Utilities\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Contracts\Config\Repository as Config;
-use AHuggins\Utilities\Console\Writers\EnvWriter;
 use PDOException;
+use Illuminate\Console\Command;
+use AHuggins\Utilities\Console\Writers\EnvWriter;
+use Illuminate\Contracts\Config\Repository as Config;
 
 class SetDatabaseCredentials extends Command
 {
@@ -39,6 +39,7 @@ class SetDatabaseCredentials extends Command
      */
     public function __construct(Config $config, EnvWriter $env)
     {
+        parent::__construct();
         $this->config = $config;
         $this->env = $env;
     }
@@ -50,13 +51,10 @@ class SetDatabaseCredentials extends Command
 
     /**
      * Handle the Command
-     * @param  Command $command
      * @return mixed
      */
-    public function handle(Command $command)
+    public function handle()
     {
-        $this->command = $command;
-
         $connected = false;
 
         while (! $connected) {
@@ -73,13 +71,13 @@ class SetDatabaseCredentials extends Command
             if ($this->databaseConnectionIsValid()) {
                 $connected = true;
             } else {
-                $command->error("Please ensure your database credentials are valid.");
+                $this->error("Please ensure your database credentials are valid.");
             }
         }
 
         $this->env->write($name, $user, $password, $host);
 
-        $command->info('Database successfully configured');
+        $this->info('Database successfully configured');
     }
 
     /**
@@ -87,7 +85,7 @@ class SetDatabaseCredentials extends Command
      */
     protected function askDatabaseHost()
     {
-        $host = $this->command->ask('Enter your database host', 'localhost');
+        $host = $this->ask('Enter your database host', 'localhost');
 
         return $host;
     }
@@ -98,9 +96,9 @@ class SetDatabaseCredentials extends Command
     protected function askDatabaseName()
     {
         do {
-            $name = $this->command->ask('Enter your database name', 'homestead');
+            $name = $this->ask('Enter your database name', 'homestead');
             if ($name == '') {
-                $this->command->error('Database name is required');
+                $this->error('Database name is required');
             }
         } while (!$name);
 
@@ -114,9 +112,9 @@ class SetDatabaseCredentials extends Command
     protected function askDatabaseUsername()
     {
         do {
-            $user = $this->command->ask('Enter your database username', 'homestead');
+            $user = $this->ask('Enter your database username', 'homestead');
             if ($user == '') {
-                $this->command->error('Database username is required');
+                $this->error('Database username is required');
             }
         } while (!$user);
 
@@ -129,7 +127,7 @@ class SetDatabaseCredentials extends Command
      */
     protected function askDatabasePassword()
     {
-        $databasePassword = $this->command->ask('Enter your database password (leave <none> for no password)', 'secret');
+        $databasePassword = $this->ask('Enter your database password (enter "<none>" for no password)', 'secret');
 
         return ($databasePassword === '<none>') ? '' : $databasePassword;
     }

@@ -2,7 +2,6 @@
 
 namespace AHuggins\Utilities\Console\Writers;
 
-use Dotenv;
 use Illuminate\Filesystem\Filesystem;
 
 class EnvWriter
@@ -15,19 +14,18 @@ class EnvWriter
      * @var array
      */
     protected $search = [
-        "DB_HOST=localhost",
+        "DB_HOST=127.0.0.1",
+        "DB_PORT=3306",
         "DB_DATABASE=homestead",
         "DB_USERNAME=homestead",
         "DB_PASSWORD=secret",
     ];
-    /**
-     * @var string
-     */
-    protected $template = '.env.example';
+
     /**
      * @var string
      */
     protected $file = '.env';
+
     /**
      * @param Filesystem $finder
      */
@@ -43,16 +41,15 @@ class EnvWriter
      */
     public function write($name, $username, $password, $host)
     {
-        Dotenv::makeMutable();
-        $environmentFile = $this->finder->get($this->template);
+        $environmentFile = $this->finder->get($this->file);
         $replace = [
             "DB_HOST=$host",
+            "DB_PORT=3306",
             "DB_DATABASE=$name",
             "DB_USERNAME=$username",
             "DB_PASSWORD=$password",
         ];
         $newEnvironmentFile = str_replace($this->search, $replace, $environmentFile);
         $this->finder->put($this->file, $newEnvironmentFile);
-        Dotenv::makeImmutable();
     }
 }
