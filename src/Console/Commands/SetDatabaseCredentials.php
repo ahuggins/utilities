@@ -55,6 +55,10 @@ class SetDatabaseCredentials extends Command
      */
     public function handle()
     {
+        if (! $this->confirm('Set up DB creds now? [y|N]')) {
+            return;
+        }
+
         $connected = false;
 
         while (! $connected) {
