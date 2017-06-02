@@ -3,6 +3,7 @@
 ## Commands
 * Create User
 * Reset Password
+* Auto Service Providers
 
 ## Basic Description
 
@@ -43,3 +44,38 @@ Now if you already know the id of the user you want to edit. Simply use the comm
 `php artisan utils:pw 1`
 
 Where `1` is replaced by the id of the user you want to edit.
+
+## Auto Service Providers (In Process)
+
+I am trying to add the ability for other package authors to automate the step of adding the releavant class paths to the providers and aliases arrays in config/app.php.
+
+> This command will not work as of 6/24/2016.
+
+Basically I am thinking that if they made the `ahuggins/utilities` package a dependency in their package, and then had a file in the root of their `src` directory named config.php, with contents like this:
+
+```
+<?php
+
+namespace AHuggins\Utilities;
+
+use AHuggins\Utilities\ProviderConfig;
+
+class Config extends ProviderConfig
+{
+    protected $providers = [
+        'providers' => [
+            AHuggins\Utilities\Providers\UtilityServiceProvider::class,
+        ],
+        'aliases' => [
+            'Util' => AHuggins\Utilities\Console\Commands\AddProviders::class,
+        ]
+    ];
+}
+
+```
+
+Obviously, you would have to update the namespace for the package, as well as the contents of the `$providers` array. But the command I build would be able to grab the values from the config.php file. Then using the composer scripts section of a composer.json file, you could tell Composer to execute a command (the command I am building) after install. The command would then grab the values and update the appropriate array checking for duplicates.
+
+One issue I see initially, is that if the ahuggins/utilities package is not installed, then you have to manually add it for this convenience. This could be easily incorporated into core Laravel so this is not an issue, but I am hoping to figure out a nice easy way to get around that.
+
+Seems like a small thing, but is one less kind of tedious thing you have to do when installing a package. This will be very Laravel specific, but if other packages added this config.php file to their repo's as well as the composer.json part, we could eliminate a couple copy and paste steps that are just minor annoyances.

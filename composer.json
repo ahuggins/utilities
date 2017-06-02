@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "AHuggins\\Utilities\\": "src/"
-        }
+        },
+        "files": [
+            "./src/functions.php"
+        ]
     },
     "extra": {
         "laravel": {
