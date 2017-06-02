@@ -16,6 +16,8 @@ The usual:
 
 After that installs, add the following to your `config/app.php` file in the providers array:
 
+> Note, with Laravel 5.5+, this should automatically be installed.
+
 `AHuggins\Utilities\Providers\UtilityServiceProvider::class,`
 
 ## Create User
